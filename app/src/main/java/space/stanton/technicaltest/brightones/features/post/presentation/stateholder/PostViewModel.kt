@@ -6,20 +6,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import space.stanton.technicaltest.brightones.features.post.domain.model.Post
-import space.stanton.technicaltest.brightones.features.post.data.repository.PostRepository
+import space.stanton.technicaltest.brightones.features.post.domain.repository.PostRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class PostViewModel @Inject constructor(): ViewModel() {
+class PostViewModel @Inject constructor(
+    private val postRepository: PostRepository
+): ViewModel() {
 
-    /*
-    * The `PostRepository` should be injected into the `PostViewModel` using Hilt. This will allow
-    * the `PostRepository` to be mocked in tests. The `PostRepository` should not be instantiated
-    * directly in the `PostViewModel`. This introduces tight coupling between the `PostViewModel`
-    * and the `PostRepository` and violates the Dependency Inversion Principle as well as the
-    * Single Responsibility Principle.
-    * */
-    private val postRepository = PostRepository()
 
     /*
     * Data encapsulation is not being used here. The `posts` state is being exposed as a public
