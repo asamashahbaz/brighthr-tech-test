@@ -22,6 +22,21 @@ import space.stanton.technicaltest.brightones.features.post.viewmodel.PostViewMo
 
 @Composable
 fun PostScreen(modifier: Modifier = Modifier) {
+    /*
+    * The PostViewModel will not persist during recomposition since it is a local variable. This
+    * means that the posts will be reloaded every time the screen is recomposed. And since a
+    * recomposition is triggered every time the `posts` state changes, the posts will be reloaded
+    * infinitely.
+    * The ViewModel should be created using the `viewModel()` function. This function is provided by
+    * the Compose ViewModel Lifecycle library.
+    * The `viewModel()` function returns an instance of the ViewModel class if it already exists, or
+    * creates a new instance if it does not exist. It also handles the lifecycle of the ViewModel by
+    * destroying it when the owner is destroyed (e.g. composable is removed from the composition or
+    * activity is destroyed).
+    * Moreover, the ViewModel instance should be passed to the screen as a parameter from the
+    * navigation. This way we can scope the lifecycle of the ViewModel to a certain navigation
+    * graph. This will allow us to share the ViewModel between multiple screens in the same graph.
+    * */
     val viewModel = PostViewModel()
 
     val posts by viewModel.posts.collectAsState()
@@ -34,6 +49,13 @@ fun PostScreen(modifier: Modifier = Modifier) {
     )
 }
 
+/*
+* The `PostView` should not need the `PostViewModel` as a parameter. It should only receive
+* the `posts` state. The `loadPost` function reference should not be passed to the view. Instead,
+* the posts should be loaded by the ViewModel and the `posts` state should be updated.
+* By removing the `PostViewModel` as a parameter, we are decoupling the view from the ViewModel.
+* This also allows us to preview the view without having to instantiate the ViewModel.
+* */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostView(
@@ -42,7 +64,12 @@ fun PostView(
     postViewModel: PostViewModel,
     loadPost: () -> Unit
 ) {
-
+    /*
+    * A few issues with this approach of loading the posts:
+    * 1. This function is called at every recomposition, but we only want to load the posts once.
+    * 2. The function belongs to the ViewModel, but it is called from the view.
+    * 3. The function and the ViewModel are both being passed to the view. This is unnecessary.
+    * */
     loadPost()
 
     Scaffold(
@@ -51,6 +78,12 @@ fun PostView(
             TopAppBar(title = { Text(text = "Post List") })
         }
     ) { padding ->
+        /*
+        * 1. Using `Column` means that all the posts are loaded into memory at once. This is not
+        *    scalable. We should use `LazyColumn` instead which recycles the composables.
+        * 2. The `Column` is not scrollable. To make it scrollable, we need to specify the
+        *    `scrollable()` modifier. The `LazyColumn` is scrollable by default.
+        * */
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(padding)
@@ -63,6 +96,12 @@ fun PostView(
     }
 }
 
+/*
+* The ViewModel should not be passed to the child views. Instead, only the ViewModel state and the
+* event handler should be passed to the view. Any events that need to be handled by the ViewModel
+* should be passed to the ViewModel using a dedicated function that takes the event type as a
+* parameter. This helps to decouple the view from the ViewModel.
+* */
 @Composable
 fun PostView(post: Post, postViewModel: PostViewModel) {
 
@@ -70,6 +109,8 @@ fun PostView(post: Post, postViewModel: PostViewModel) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .clickable {
+                // An event should be passed to the ViewModel instead of calling the ViewModel
+                // function directly.
                 postViewModel.navigateToDetail()
             }
             .fillMaxWidth()

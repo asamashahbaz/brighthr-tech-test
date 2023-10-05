@@ -1,5 +1,10 @@
 package space.stanton.technicaltest.brightones.features.post.model
 
+/*
+* This class should be a data class. Data classes in Kotlin offer functions such as `equals()`,
+* `hashCode()` and `toString()` out of the box. This will help reduce the amount of boilerplate
+* code in the project.
+* */
 class Post (
     val id: Int,
     val userId: Int,

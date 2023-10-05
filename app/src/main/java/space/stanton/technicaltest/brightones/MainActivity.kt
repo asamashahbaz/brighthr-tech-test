@@ -16,6 +16,14 @@ import space.stanton.technicaltest.brightones.ui.theme.BrightonesTheme
  * Please carefully read the README, in the root project directory,
  * in order to complete this tech task.
  */
+
+/*
+* Currently, there is no Dependency Injection happening in the application using Hilt.
+* The `MainActivity` class should be annotated with `@AndroidEntryPoint` in order to use Hilt.
+* Also, an Application class should be created, annotated with `@HiltAndroidApp` and added to the
+* `AndroidManifest.xml`file. This will allow the application to inject dependencies using Hilt.
+* Without this, there will be no dependency injection through Hilt.
+* */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
