@@ -63,3 +63,15 @@ In your interview we will ask you more about your process in completing the abov
 There will also be a short exercise where you will be paired with one of our Android team member
 and given a task to develop this project further. You will have full access to internet
 resources to help you.
+
+## Future Work
+The response from the repository could be wrapped inside a `Result` sealed class that contains class types for `Loading`, `Success` and `Error` states.  
+By further extending the `Error` class type, we can have different types of classes that indicate a specific kind of error.
+This would allow us to use string resources based on the error class type directly in the views and will mostly help us keep the ViewModel clean of Android platform related code.
+
+We could also employ an event wrapper to set-up communication from composables to the `ViewModel`.  
+This would allow us to pass a single `ViewModel` function reference to the composables and have them call it with the required event type and parameters.  
+This would make the `ViewModel` more testable and would also allow us to use the same `ViewModel` for different views.
+
+We could also have use-cases in the `domain` layer that take care of the business logic and the communication with the repository.  
+These use-cases would then be injected into the `ViewModel` and called from there.
