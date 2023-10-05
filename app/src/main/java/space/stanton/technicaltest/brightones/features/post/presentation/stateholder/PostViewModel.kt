@@ -7,14 +7,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import space.stanton.technicaltest.brightones.features.post.domain.model.Post
 import space.stanton.technicaltest.brightones.features.post.domain.repository.PostRepository
+import space.stanton.technicaltest.brightones.features.post.presentation.navigation.AppNavigator
 import javax.inject.Inject
 
 @HiltViewModel
 class PostViewModel @Inject constructor(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val appNavigator: AppNavigator
 ): ViewModel() {
 
-
+    val navigationChannel = appNavigator.navigationChannel
     /*
     * Data encapsulation is not being used here. The `posts` state is being exposed as a public
     * property instead of a private property with a public getter. This means that the `posts` state
@@ -37,7 +39,9 @@ class PostViewModel @Inject constructor(
     * This function should be private. Instead, a `onEvent` function should be exposed that takes in
     * a specific `PostEvent` type and performs the appropriate action.
     * */
-    fun navigateToDetail() {
-        // TODO: For you to implement however you see fit.
+    fun navigateToDetail(postId: Int) {
+        viewModelScope.launch {
+            appNavigator.navigateTo("post/$postId")
+        }
     }
 }

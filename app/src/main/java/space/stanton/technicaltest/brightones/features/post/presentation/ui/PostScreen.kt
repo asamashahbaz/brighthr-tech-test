@@ -84,7 +84,7 @@ fun PostView(post: Post, postViewModel: PostViewModel) {
             .clickable {
                 // An event should be passed to the ViewModel instead of calling the ViewModel
                 // function directly.
-                postViewModel.navigateToDetail()
+                postViewModel.navigateToDetail(post.id)
             }
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
