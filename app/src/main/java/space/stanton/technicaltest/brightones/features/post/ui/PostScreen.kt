@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -55,17 +57,11 @@ fun PostView(
             TopAppBar(title = { Text(text = "Post List") })
         }
     ) { padding ->
-        /*
-        * 1. Using `Column` means that all the posts are loaded into memory at once. This is not
-        *    scalable. We should use `LazyColumn` instead which recycles the composables.
-        * 2. The `Column` is not scrollable. To make it scrollable, we need to specify the
-        *    `scrollable()` modifier. The `LazyColumn` is scrollable by default.
-        * */
-        Column(modifier = Modifier
+        LazyColumn(modifier = Modifier
             .fillMaxSize()
             .padding(padding)
         ) {
-            posts.filter { it.body != null }.sortedBy { it.id }.forEach {
+            items(posts.filter { it.body != null }.sortedBy { it.id }) {
                 PostView(post = it, postViewModel = postViewModel)
                 Divider(modifier = Modifier.padding(top = 8.dp, bottom = 16.dp))
             }
