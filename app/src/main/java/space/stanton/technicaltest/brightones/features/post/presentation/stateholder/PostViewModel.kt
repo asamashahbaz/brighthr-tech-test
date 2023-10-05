@@ -1,12 +1,12 @@
-package space.stanton.technicaltest.brightones.features.post.viewmodel
+package space.stanton.technicaltest.brightones.features.post.presentation.stateholder
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import space.stanton.technicaltest.brightones.features.post.model.Post
-import space.stanton.technicaltest.brightones.features.post.repository.PostRepository
+import space.stanton.technicaltest.brightones.features.post.domain.model.Post
+import space.stanton.technicaltest.brightones.features.post.data.repository.PostRepository
 import javax.inject.Inject
 
 @HiltViewModel

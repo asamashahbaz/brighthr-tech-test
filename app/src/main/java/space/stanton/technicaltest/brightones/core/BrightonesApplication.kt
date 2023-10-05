@@ -1,4 +1,4 @@
-package space.stanton.technicaltest.brightones
+package space.stanton.technicaltest.brightones.core
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

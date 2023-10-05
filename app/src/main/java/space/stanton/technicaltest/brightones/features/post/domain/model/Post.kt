@@ -1,4 +1,4 @@
-package space.stanton.technicaltest.brightones.features.post.model
+package space.stanton.technicaltest.brightones.features.post.domain.model
 
 /*
 * This class should be a data class. Data classes in Kotlin offer functions such as `equals()`,

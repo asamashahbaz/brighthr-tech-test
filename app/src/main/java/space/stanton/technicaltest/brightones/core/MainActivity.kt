@@ -1,4 +1,4 @@
-package space.stanton.technicaltest.brightones
+package space.stanton.technicaltest.brightones.core
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import space.stanton.technicaltest.brightones.features.post.ui.PostScreen
-import space.stanton.technicaltest.brightones.features.post.viewmodel.PostViewModel
-import space.stanton.technicaltest.brightones.ui.theme.BrightonesTheme
+import space.stanton.technicaltest.brightones.features.post.presentation.ui.PostScreen
+import space.stanton.technicaltest.brightones.features.post.presentation.stateholder.PostViewModel
+import space.stanton.technicaltest.brightones.core.ui.theme.BrightonesTheme
 
 /**
  * Please carefully read the README, in the root project directory,

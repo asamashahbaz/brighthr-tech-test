@@ -1,4 +1,4 @@
-package space.stanton.technicaltest.brightones.features.post.ui
+package space.stanton.technicaltest.brightones.features.post.presentation.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +19,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import space.stanton.technicaltest.brightones.features.post.model.Post
-import space.stanton.technicaltest.brightones.features.post.viewmodel.PostViewModel
+import space.stanton.technicaltest.brightones.features.post.domain.model.Post
+import space.stanton.technicaltest.brightones.features.post.presentation.stateholder.PostViewModel
 
 @Composable
 fun PostScreen(
