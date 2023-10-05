@@ -21,23 +21,10 @@ import space.stanton.technicaltest.brightones.features.post.model.Post
 import space.stanton.technicaltest.brightones.features.post.viewmodel.PostViewModel
 
 @Composable
-fun PostScreen(modifier: Modifier = Modifier) {
-    /*
-    * The PostViewModel will not persist during recomposition since it is a local variable. This
-    * means that the posts will be reloaded every time the screen is recomposed. And since a
-    * recomposition is triggered every time the `posts` state changes, the posts will be reloaded
-    * infinitely.
-    * The ViewModel should be created using the `viewModel()` function. This function is provided by
-    * the Compose ViewModel Lifecycle library.
-    * The `viewModel()` function returns an instance of the ViewModel class if it already exists, or
-    * creates a new instance if it does not exist. It also handles the lifecycle of the ViewModel by
-    * destroying it when the owner is destroyed (e.g. composable is removed from the composition or
-    * activity is destroyed).
-    * Moreover, the ViewModel instance should be passed to the screen as a parameter from the
-    * navigation. This way we can scope the lifecycle of the ViewModel to a certain navigation
-    * graph. This will allow us to share the ViewModel between multiple screens in the same graph.
-    * */
-    val viewModel = PostViewModel()
+fun PostScreen(
+    viewModel: PostViewModel,
+    modifier: Modifier = Modifier
+) {
 
     val posts by viewModel.posts.collectAsState()
 
@@ -45,14 +32,12 @@ fun PostScreen(modifier: Modifier = Modifier) {
         modifier = modifier,
         posts = posts,
         postViewModel = viewModel,
-        loadPost = viewModel::loadPost
     )
 }
 
 /*
 * The `PostView` should not need the `PostViewModel` as a parameter. It should only receive
-* the `posts` state. The `loadPost` function reference should not be passed to the view. Instead,
-* the posts should be loaded by the ViewModel and the `posts` state should be updated.
+* the `posts` state.
 * By removing the `PostViewModel` as a parameter, we are decoupling the view from the ViewModel.
 * This also allows us to preview the view without having to instantiate the ViewModel.
 * */
@@ -62,15 +47,7 @@ fun PostView(
     modifier: Modifier,
     posts: List<Post>,
     postViewModel: PostViewModel,
-    loadPost: () -> Unit
 ) {
-    /*
-    * A few issues with this approach of loading the posts:
-    * 1. This function is called at every recomposition, but we only want to load the posts once.
-    * 2. The function belongs to the ViewModel, but it is called from the view.
-    * 3. The function and the ViewModel are both being passed to the view. This is unnecessary.
-    * */
-    loadPost()
 
     Scaffold(
         modifier = modifier,

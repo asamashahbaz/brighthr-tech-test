@@ -6,11 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import space.stanton.technicaltest.brightones.features.post.ui.PostScreen
+import space.stanton.technicaltest.brightones.features.post.viewmodel.PostViewModel
 import space.stanton.technicaltest.brightones.ui.theme.BrightonesTheme
 
 /**
@@ -32,9 +34,13 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainNavigation() {
         val navHostController = rememberNavController()
+        val postViewModel: PostViewModel = viewModel()
         NavHost(navController = navHostController, startDestination = "post") {
             composable(route = "post") {
-                PostScreen(modifier = Modifier.fillMaxSize())
+                PostScreen(
+                    viewModel = postViewModel,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
     }

@@ -28,11 +28,11 @@ class PostViewModel @Inject constructor(): ViewModel() {
     * */
     var posts = MutableStateFlow<List<Post>>(emptyList())
 
-    /*
-    * It is PostViewModel's job to load and keep the data ready. This function should be private and
-    * should be called when the `PostViewModel` is instantiated.
-    * */
-    fun loadPost() {
+    init {
+        loadPost()
+    }
+
+    private fun loadPost() {
         viewModelScope.launch {
             val result = postRepository.retrieveAllPosts()
             posts.emit(result.shuffled())
