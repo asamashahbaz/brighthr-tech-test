@@ -1,9 +1,7 @@
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
-    // KSP should be used instead of KAPT. KAPT is now in maintenance mode and Google recommends
-    // using KSP instead which is at least 2x faster at building than KAPT.
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
@@ -70,12 +68,9 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    implementation("com.google.dagger:hilt-android:2.46.1")
-    // We should use the Hilt Navigation Compose library instead of the Hilt Navigation Fragment
-    // library. The Compose library allows us to instantiate the ViewModel using the
-    // `hiltViewModel()` and scope it to the navigation graph.
-    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
+    implementation("com.google.dagger:hilt-android:2.48")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
 
 
     testImplementation("junit:junit:4.13.2")
@@ -85,8 +80,4 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-}
-
-kapt {
-    correctErrorTypes = true
 }
