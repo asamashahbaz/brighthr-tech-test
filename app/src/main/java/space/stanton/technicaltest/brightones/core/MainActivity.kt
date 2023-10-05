@@ -4,13 +4,12 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -25,6 +24,8 @@ import space.stanton.technicaltest.brightones.features.post.presentation.ui.Post
 import space.stanton.technicaltest.brightones.features.post.presentation.stateholder.PostViewModel
 import space.stanton.technicaltest.brightones.core.ui.theme.BrightonesTheme
 import space.stanton.technicaltest.brightones.features.post.presentation.navigation.NavigationIntent
+import space.stanton.technicaltest.brightones.features.post.presentation.stateholder.PostDetailViewModel
+import space.stanton.technicaltest.brightones.features.post.presentation.ui.PostDetailScreen
 
 /**
  * Please carefully read the README, in the root project directory,
@@ -64,11 +65,11 @@ class MainActivity : ComponentActivity() {
                 route = "post/{postId}",
                 arguments = listOf(navArgument("postId") { type = NavType.IntType })
             ) {
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text("Hello World")
-                }
+                val postDetailViewModel: PostDetailViewModel = hiltViewModel()
+
+                PostDetailScreen(
+                    viewModel = postDetailViewModel
+                )
             }
         }
     }

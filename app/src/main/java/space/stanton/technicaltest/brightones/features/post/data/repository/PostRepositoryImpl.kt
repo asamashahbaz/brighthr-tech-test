@@ -19,4 +19,11 @@ class PostRepositoryImpl @Inject constructor(
         return posts
     }
 
+    override suspend fun retrievePostById(postId: Int): Post {
+        val post = withContext(Dispatchers.IO) {
+            postService.retrievePostWithId(postId)
+        }
+
+        return post
+    }
 }
